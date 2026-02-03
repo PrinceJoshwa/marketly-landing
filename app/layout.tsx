@@ -65,9 +65,9 @@ export const metadata: Metadata = {
     "Transform your brand with premium digital marketing solutions. 500+ projects completed, 120+ happy clients, 10+ years of expertise.",
 
   icons: {
-    icon: "https://ik.imagekit.io/j0xzq9pns/logo.png?updatedAt=1769874559685",
-    shortcut: "https://ik.imagekit.io/j0xzq9pns/logo.png?updatedAt=1769874559685",
-    apple: "https://ik.imagekit.io/j0xzq9pns/logo.png?updatedAt=1769874559685",
+    icon: "https://ik.imagekit.io/j0xzq9pns/Marketly-removebg-preview.png",
+    shortcut: "https://ik.imagekit.io/j0xzq9pns/Marketly-removebg-preview.png",
+    apple: "https://ik.imagekit.io/j0xzq9pns/Marketly-removebg-preview.png",
   },
 }
 
