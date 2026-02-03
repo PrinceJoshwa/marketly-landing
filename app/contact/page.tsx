@@ -436,7 +436,7 @@ export default function ContactPage() {
                                                 value={formData.phone}
                                                 onChange={handleChange}
                                                 className="w-full px-4 py-3.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-600"
-                                                placeholder="+1 (555) 000-0000"
+                                                placeholder="+91 98765 43210"
                                             />
                                         </div>
                                         <div className="group">
