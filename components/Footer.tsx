@@ -182,7 +182,7 @@ import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "luc
 
 // Mock constant if not imported
 const CONTACT_INFO = {
-    address: "123 Business Avenue, Tech Park, Chennai",
+    address: "123 Marketing Street, Bengaluru, Karnataka 560001",
     phone: "+91 98765 43210",
     email: "hello@marketly.com"
 };
