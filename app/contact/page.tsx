@@ -337,7 +337,7 @@ export default function ContactPage() {
                                         <div>
                                             <h4 className="text-white font-semibold mb-1">Office</h4>
                                             <p className="text-slate-400 text-sm leading-relaxed">
-                                                123 Marketing Street,<br/>New York, NY 10001
+                                                123 Marketing Street,<br/>Bengaluru, Karnataka 560001
                                             </p>
                                         </div>
                                     </div>
@@ -349,7 +349,7 @@ export default function ContactPage() {
                                         <div>
                                             <h4 className="text-white font-semibold mb-1">Phone</h4>
                                             <p className="text-slate-400 text-sm">
-                                                +1 (555) 123-4567
+                                                +91 98765 43210
                                             </p>
                                             <p className="text-xs text-slate-500 mt-1">Mon-Fri from 8am to 5pm.</p>
                                         </div>
