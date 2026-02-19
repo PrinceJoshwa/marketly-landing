@@ -8,57 +8,88 @@ interface CTASectionProps {
     variant?: "red" | "navy" | "green" | "brand";
 }
 
-const variantStyles = {
-    red: "bg-gradient-red",
-    navy: "bg-gradient-navy",
-    green: "bg-gradient-green",
-    brand: "bg-gradient-brand",
-};
-
 export default function CTASection({
     title,
     description,
     buttonText = "Get Started",
     buttonLink = "/contact",
-    variant = "red",
 }: CTASectionProps) {
-    // Premium dark theme with bottle green accents
-
     return (
-        <section className="py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-t border-emerald-500/20">
-            {/* Animated Background Elements */}
-            <div className="absolute inset-0 opacity-15 pointer-events-none">
-                <div className="absolute top-10 right-10 w-96 h-96 bg-emerald-500 rounded-full blur-3xl animate-pulse" />
-                <div className="absolute bottom-10 left-10 w-80 h-80 bg-emerald-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-            </div>
+        <section
+            className="py-28 relative overflow-hidden"
+            style={{
+                backgroundColor: "#060d07",
+                borderTop: "1px solid rgba(201,168,76,0.15)",
+            }}
+        >
+            {/* Atmospheric gold glow */}
+            <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] pointer-events-none"
+                style={{
+                    background: "radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%)",
+                    filter: "blur(40px)",
+                }}
+            />
 
-            {/* Decorative Grid Pattern */}
-            <div className="absolute inset-0 opacity-5 pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-full" style={{
-                    backgroundImage: `linear-gradient(0deg, transparent 24%, rgba(16, 185, 129, .1) 25%, rgba(16, 185, 129, .1) 26%, transparent 27%, transparent 74%, rgba(16, 185, 129, .1) 75%, rgba(16, 185, 129, .1) 76%, transparent 77%, transparent),
-                                      linear-gradient(90deg, transparent 24%, rgba(16, 185, 129, .1) 25%, rgba(16, 185, 129, .1) 26%, transparent 27%, transparent 74%, rgba(16, 185, 129, .1) 75%, rgba(16, 185, 129, .1) 76%, transparent 77%, transparent)`,
-                    backgroundSize: '50px 50px',
-                }}></div>
-            </div>
+            {/* Decorative grid */}
+            <div
+                className="absolute inset-0 opacity-[0.025] pointer-events-none"
+                style={{
+                    backgroundImage: `
+                        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.5) 60px, rgba(201,168,76,0.5) 61px),
+                        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.5) 60px, rgba(201,168,76,0.5) 61px)
+                    `,
+                }}
+            />
 
-            <div className="relative z-10 container mx-auto px-4">
-                <div className="max-w-4xl mx-auto text-center space-y-8">
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg animate-fade-in">
+            <div className="relative z-10 container mx-auto px-6">
+                <div className="max-w-4xl mx-auto text-center space-y-8 animate-reveal">
+                    {/* Ornamental top */}
+                    <div className="flex items-center justify-center gap-4">
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, transparent, #c9a84c)" }} />
+                        <span style={{ color: "#c9a84c", fontSize: "0.6rem" }}>✦ ✦ ✦</span>
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, #c9a84c, transparent)" }} />
+                    </div>
+
+                    <span
+                        className="section-label block"
+                        style={{ fontFamily: "var(--font-cinzel)" }}
+                    >
+                        Take The Next Step
+                    </span>
+
+                    <h2
+                        className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight"
+                        style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
+                    >
                         {title}
                     </h2>
-                    <p className="text-xl md:text-2xl text-gray-200 leading-relaxed font-medium animate-fade-in" style={{ animationDelay: "0.2s" }}>
+
+                    <p
+                        className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
+                        style={{ color: "#a89880" }}
+                    >
                         {description}
                     </p>
-                    <div className="pt-6 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+
+                    <div className="pt-4">
                         <Link
                             href={buttonLink}
-                            className="inline-flex items-center px-10 py-4 bg-emerald-500 text-white font-bold text-lg rounded-full hover:bg-emerald-600 transition-all duration-300 hover:scale-105 hover:-translate-y-1 group shadow-lg hover:shadow-emerald-500/50"
+                            className="btn-gold inline-flex items-center gap-3 px-10 py-4 rounded-sm font-bold tracking-widest uppercase text-sm animate-glow-pulse"
+                            style={{ fontFamily: "var(--font-cinzel)" }}
                         >
                             {buttonText}
-                            <svg className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
                         </Link>
+                    </div>
+
+                    {/* Ornamental bottom */}
+                    <div className="flex items-center justify-center gap-4 pt-4">
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.4))" }} />
+                        <span style={{ color: "rgba(201,168,76,0.4)", fontSize: "0.5rem" }}>✦</span>
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.4), transparent)" }} />
                     </div>
                 </div>
             </div>

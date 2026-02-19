@@ -1,274 +1,15 @@
-// "use client";
-
-// import Link from "next/link";
-// import { Check, X, ArrowRight } from "lucide-react";
-// import Header from "@/components/Header";
-// import Footer from "@/components/Footer";
-// import CTASection from "@/components/CTASection";
-// import { useState } from "react";
-
-// const PRICING_PLANS = [
-//     {
-//         name: "Starter",
-//         price: "$999",
-//         period: "/month",
-//         description: "Perfect for small businesses and startups",
-//         features: [
-//             "Social Media Management (2 platforms)",
-//             "Content Creation (8 posts/month)",
-//             "Basic SEO Optimization",
-//             "Monthly Analytics Report",
-//             "Email Support",
-//         ],
-//         notIncluded: [
-//             "Paid Advertising",
-//             "Custom Development",
-//             "24/7 Support",
-//         ],
-//         highlighted: false,
-//     },
-//     {
-//         name: "Professional",
-//         price: "$2,499",
-//         period: "/month",
-//         description: "Ideal for growing businesses",
-//         features: [
-//             "Social Media Management (4 platforms)",
-//             "Content Creation (20 posts/month)",
-//             "Advanced SEO & Analytics",
-//             "Paid Advertising Management",
-//             "Weekly Performance Reports",
-//             "Email & Phone Support",
-//             "Quarterly Strategy Sessions",
-//         ],
-//         notIncluded: [
-//             "Custom Development",
-//         ],
-//         highlighted: true,
-//     },
-//     {
-//         name: "Enterprise",
-//         price: "Custom",
-//         period: "",
-//         description: "For large organizations with complex needs",
-//         features: [
-//             "Unlimited Social Media Management",
-//             "Custom Content Strategy",
-//             "Full-Service SEO & SEM",
-//             "Multi-Channel Advertising",
-//             "Custom Development & Integrations",
-//             "Real-Time Analytics Dashboard",
-//             "Dedicated Account Manager",
-//             "24/7 Priority Support",
-//             "Monthly Strategy Sessions",
-//         ],
-//         notIncluded: [],
-//         highlighted: false,
-//     }
-// ];
-
-// const FAQS = [
-//     {
-//         question: "Can I change my plan later?",
-//         answer: "Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle."
-//     },
-//     {
-//         question: "What payment methods do you accept?",
-//         answer: "We accept all major credit cards, PayPal, and bank transfers for annual subscriptions."
-//     },
-//     {
-//         question: "Is there a contract or can I cancel anytime?",
-//         answer: "Our plans are month-to-month with no long-term contracts. You can cancel anytime with 30 days notice."
-//     },
-//     {
-//         question: "Do you offer custom packages?",
-//         answer: "Absolutely! We can create a custom package tailored to your specific needs and budget. Contact us to discuss your requirements."
-//     },
-//     {
-//         question: "What's included in the setup?",
-//         answer: "All plans include initial consultation, strategy development, account setup, and onboarding training at no additional cost."
-//     },
-//     {
-//         question: "Do you provide reporting?",
-//         answer: "Yes! All plans include regular performance reports. The frequency depends on your plan level."
-//     }
-// ];
-
-// export default function PricingPage() {
-//     const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
-
-//     return (
-//         <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-//             <Header />
-
-//             {/* Hero Section */}
-//             <section className="pt-32 pb-20 px-6">
-//                 <div className="container mx-auto max-w-6xl">
-//                     <div className="text-center space-y-8 animate-fade-in max-w-4xl mx-auto">
-//                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-//                             <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-//                             <span className="text-sm font-semibold text-emerald-400">Transparent Pricing</span>
-//                         </div>
-//                         <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight text-white">
-//                             Plans Built for <span className="text-emerald-400">Your Budget</span>
-//                         </h1>
-//                         <p className="text-xl text-gray-300">
-//                             Choose the perfect plan for your business needs. All plans include our core services and expert support.
-//                         </p>
-//                     </div>
-//                 </div>
-//             </section>
-
-//             {/* Pricing Cards */}
-//             <section className="py-20 px-6">
-//                 <div className="container mx-auto max-w-6xl">
-//                     <div className="grid md:grid-cols-3 gap-8">
-//                         {PRICING_PLANS.map((plan, i) => (
-//                             <div
-//                                 key={i}
-//                                 className={`group relative p-8 rounded-2xl transition-all duration-300 ${
-//                                     plan.highlighted
-//                                         ? "bg-gradient-to-br from-emerald-900/20 to-slate-900 border-2 border-emerald-500/50 shadow-xl shadow-emerald-500/20 scale-105"
-//                                         : "bg-gradient-to-br from-slate-800 to-slate-900 border border-emerald-500/10 hover:border-emerald-500/30"
-//                                 } hover:shadow-xl hover:shadow-emerald-500/10`}
-//                             >
-//                                 {plan.highlighted && (
-//                                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">
-//                                         MOST POPULAR
-//                                     </div>
-//                                 )}
-
-//                                 {/* Plan Header */}
-//                                 <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-//                                 <p className="text-gray-400 text-sm mb-6">{plan.description}</p>
-
-//                                 {/* Price */}
-//                                 <div className="mb-8">
-//                                     <span className="text-5xl font-black text-white">{plan.price}</span>
-//                                     {plan.period && <span className="text-gray-400 text-sm">{plan.period}</span>}
-//                                 </div>
-
-//                                 {/* CTA Button */}
-//                                 <Link
-//                                     href="/contact"
-//                                     className={`w-full py-3 rounded-lg font-bold transition-all duration-200 flex items-center justify-center gap-2 mb-8 ${
-//                                         plan.highlighted
-//                                             ? "bg-emerald-500 text-white hover:bg-emerald-600"
-//                                             : "bg-slate-700 text-white hover:bg-slate-600"
-//                                     }`}
-//                                 >
-//                                     Get Started
-//                                     <ArrowRight size={18} />
-//                                 </Link>
-
-//                                 {/* Features */}
-//                                 <div className="space-y-4 mb-8 pb-8 border-b border-emerald-500/10">
-//                                     <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Included Features</p>
-//                                     {plan.features.map((feature, j) => (
-//                                         <div key={j} className="flex items-start gap-3">
-//                                             <Check className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-//                                             <span className="text-gray-300 text-sm">{feature}</span>
-//                                         </div>
-//                                     ))}
-//                                 </div>
-
-//                                 {/* Not Included */}
-//                                 {plan.notIncluded.length > 0 && (
-//                                     <div className="space-y-3">
-//                                         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Not Included</p>
-//                                         {plan.notIncluded.map((feature, j) => (
-//                                             <div key={j} className="flex items-start gap-3">
-//                                                 <X className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
-//                                                 <span className="text-gray-500 text-sm">{feature}</span>
-//                                             </div>
-//                                         ))}
-//                                     </div>
-//                                 )}
-//                             </div>
-//                         ))}
-//                     </div>
-//                 </div>
-//             </section>
-
-//             {/* Comparison Section */}
-//             <section className="py-20 px-6 bg-slate-800/30 border-y border-emerald-500/20">
-//                 <div className="container mx-auto max-w-6xl">
-//                     <h2 className="text-4xl md:text-5xl font-black text-white mb-16 text-center">What's Included in Every Plan</h2>
-
-//                     <div className="grid md:grid-cols-2 gap-8">
-//                         {[
-//                             { title: "Expert Consultation", description: "Initial consultation to understand your goals and challenges" },
-//                             { title: "Custom Strategy", description: "Tailored marketing strategy based on your industry and audience" },
-//                             { title: "Regular Reporting", description: "Transparent reporting to track progress and results" },
-//                             { title: "Professional Support", description: "Dedicated support team to answer your questions" },
-//                             { title: "Industry Best Practices", description: "Implementation of latest marketing methodologies" },
-//                             { title: "Continuous Optimization", description: "Ongoing improvements to maximize your ROI" }
-//                         ].map((item, i) => (
-//                             <div key={i} className="p-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl border border-emerald-500/10 flex gap-4">
-//                                 <div className="w-6 h-6 bg-emerald-500 rounded-full flex-shrink-0 flex items-center justify-center">
-//                                     <Check className="w-4 h-4 text-white" />
-//                                 </div>
-//                                 <div>
-//                                     <h3 className="font-bold text-white mb-1">{item.title}</h3>
-//                                     <p className="text-gray-400 text-sm">{item.description}</p>
-//                                 </div>
-//                             </div>
-//                         ))}
-//                     </div>
-//                 </div>
-//             </section>
-
-//             {/* FAQs */}
-//             <section className="py-20 px-6">
-//                 <div className="container mx-auto max-w-3xl">
-//                     <h2 className="text-4xl md:text-5xl font-black text-white mb-16 text-center">Frequently Asked Questions</h2>
-
-//                     <div className="space-y-4">
-//                         {FAQS.map((faq, i) => (
-//                             <button
-//                                 key={i}
-//                                 onClick={() => setExpandedFAQ(expandedFAQ === i ? null : i)}
-//                                 className="w-full text-left p-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl border border-emerald-500/10 hover:border-emerald-500/30 transition-all duration-300"
-//                             >
-//                                 <div className="flex items-center justify-between">
-//                                     <h3 className="font-bold text-white text-lg">{faq.question}</h3>
-//                                     <div className={`transition-transform ${expandedFAQ === i ? "rotate-180" : ""}`}>
-//                                         <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-//                                         </svg>
-//                                     </div>
-//                                 </div>
-//                                 {expandedFAQ === i && (
-//                                     <p className="mt-4 text-gray-300 leading-relaxed">{faq.answer}</p>
-//                                 )}
-//                             </button>
-//                         ))}
-//                     </div>
-//                 </div>
-//             </section>
-
-//             {/* CTA Section */}
-//             <CTASection />
-
-//             <Footer />
-//         </div>
-//     );
-// }
-
 "use client";
 
 import Link from "next/link";
 import { Check, X, ArrowRight, ChevronDown } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CTASection from "@/components/CTASection";
 import { useState } from "react";
 
-// DATA (Preserved)
 const PRICING_PLANS = [
     {
         name: "Starter",
-        price: "$999",
+        price: "₹49,999",
         period: "/month",
         description: "Perfect for small businesses and startups",
         features: ["Social Media Management (2 platforms)", "Content Creation (8 posts/month)", "Basic SEO Optimization", "Monthly Analytics Report", "Email Support"],
@@ -277,7 +18,7 @@ const PRICING_PLANS = [
     },
     {
         name: "Professional",
-        price: "$2,499",
+        price: "₹1,24,999",
         period: "/month",
         description: "Ideal for growing businesses",
         features: ["Social Media Management (4 platforms)", "Content Creation (20 posts/month)", "Advanced SEO & Analytics", "Paid Advertising Management", "Weekly Performance Reports", "Email & Phone Support", "Quarterly Strategy Sessions"],
@@ -292,133 +33,253 @@ const PRICING_PLANS = [
         features: ["Unlimited Social Media Management", "Custom Content Strategy", "Full-Service SEO & SEM", "Multi-Channel Advertising", "Custom Development & Integrations", "Real-Time Analytics Dashboard", "Dedicated Account Manager", "24/7 Priority Support", "Monthly Strategy Sessions"],
         notIncluded: [],
         highlighted: false,
-    }
+    },
 ];
 
 const FAQS = [
     { question: "Can I change my plan later?", answer: "Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle." },
-    { question: "What payment methods do you accept?", answer: "We accept all major credit cards, PayPal, and bank transfers for annual subscriptions." },
+    { question: "What payment methods do you accept?", answer: "We accept all major credit cards, UPI, net banking, and bank transfers for annual subscriptions." },
     { question: "Is there a contract or can I cancel anytime?", answer: "Our plans are month-to-month with no long-term contracts. You can cancel anytime with 30 days notice." },
     { question: "Do you offer custom packages?", answer: "Absolutely! We can create a custom package tailored to your specific needs and budget. Contact us to discuss your requirements." },
     { question: "What's included in the setup?", answer: "All plans include initial consultation, strategy development, account setup, and onboarding training at no additional cost." },
-    { question: "Do you provide reporting?", answer: "Yes! All plans include regular performance reports. The frequency depends on your plan level." }
+    { question: "Do you provide reporting?", answer: "Yes! All plans include regular performance reports. The frequency depends on your plan level." },
 ];
 
 export default function PricingPage() {
     const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
 
     return (
-        <div className="min-h-screen bg-slate-950 relative selection:bg-emerald-500/30 selection:text-emerald-200 font-sans text-slate-200">
+        <div className="min-h-screen" style={{ backgroundColor: "#080f09", color: "#f5f0e8" }}>
             <Header />
 
-            {/* BACKGROUND MESH */}
+            {/* Atmospheric gold glow */}
             <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-emerald-500/10 rounded-full blur-[120px] opacity-60 mix-blend-screen" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px] opacity-60 mix-blend-screen" />
+                <div
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px]"
+                    style={{ background: "radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%)", filter: "blur(80px)" }}
+                />
             </div>
 
-            <main className="relative z-10 pt-32 pb-20 px-4 md:px-6">
-                <div className="container mx-auto max-w-7xl">
+            <main className="relative z-10 pt-36 pb-24 px-4 md:px-6">
+                <div className="container mx-auto max-w-6xl">
 
-                    {/* HERO HEADER */}
-                    <div className="text-center max-w-4xl mx-auto mb-20">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-emerald-500/30 text-emerald-400 text-sm font-medium mb-6">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
-                            Transparent Pricing
-                        </div>
-                        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 leading-tight">
-                            Plans Built for <br/>
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Your Budget.</span>
+                    {/* Hero Header */}
+                    <div className="text-center max-w-4xl mx-auto mb-24">
+                        <p
+                            className="text-xs tracking-[0.35em] uppercase mb-6 inline-block"
+                            style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)" }}
+                        >
+                            ✦ Transparent Pricing ✦
+                        </p>
+                        <h1
+                            className="text-5xl md:text-7xl leading-tight mb-8"
+                            style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, color: "#f5f0e8" }}
+                        >
+                            Plans Built for{" "}
+                            <em style={{ color: "#c9a84c", fontStyle: "italic" }}>Your Vision</em>
                         </h1>
-                        <p className="text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto">
-                            Choose the perfect plan for your business needs. All plans include our core services and expert support.
+                        <p className="text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: "#a89880" }}>
+                            Choose the perfect plan for your business needs. All plans include our core services and dedicated expert support.
                         </p>
                     </div>
 
-                    {/* PRICING CARDS */}
-                    <div className="grid md:grid-cols-3 gap-8 items-start mb-32">
+                    {/* Ornamental divider */}
+                    <div className="flex items-center gap-4 mb-24">
+                        <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.3))" }} />
+                        <span style={{ color: "rgba(201,168,76,0.6)", fontSize: "0.5rem" }}>✦</span>
+                        <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.3), transparent)" }} />
+                    </div>
+
+                    {/* Pricing Cards */}
+                    <div className="grid md:grid-cols-3 gap-8 items-start mb-28">
                         {PRICING_PLANS.map((plan, i) => (
                             <div
                                 key={i}
-                                className={`relative p-8 rounded-[32px] border transition-all duration-300 flex flex-col h-full ${
-                                    plan.highlighted
-                                        ? "bg-slate-900/60 backdrop-blur-xl border-emerald-500 shadow-2xl shadow-emerald-500/20 scale-105 z-10"
-                                        : "bg-slate-900/40 backdrop-blur-md border-white/10 hover:border-white/20"
-                                }`}
+                                className="relative flex flex-col transition-all duration-300"
+                                style={{
+                                    backgroundColor: plan.highlighted ? "#132b1a" : "#0f2218",
+                                    border: plan.highlighted
+                                        ? "1px solid rgba(201,168,76,0.6)"
+                                        : "1px solid rgba(201,168,76,0.15)",
+                                    transform: plan.highlighted ? "scale(1.03)" : "scale(1)",
+                                    zIndex: plan.highlighted ? 10 : 1,
+                                }}
                             >
                                 {plan.highlighted && (
-                                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-2 bg-emerald-500 text-white text-xs font-bold rounded-full uppercase tracking-widest shadow-lg shadow-emerald-500/40">
+                                    <div
+                                        className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-1.5 text-xs font-bold tracking-widest uppercase"
+                                        style={{
+                                            background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
+                                            color: "#080f09",
+                                            fontFamily: "var(--font-cinzel)",
+                                        }}
+                                    >
                                         Most Popular
                                     </div>
                                 )}
 
-                                <div className="mb-8">
-                                    <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-                                    <p className="text-slate-400 text-sm mb-6 min-h-[40px]">{plan.description}</p>
-                                    
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-5xl font-black text-white tracking-tight">{plan.price}</span>
-                                        {plan.period && <span className="text-slate-500 text-sm font-bold">{plan.period}</span>}
+                                <div className="p-8 flex flex-col h-full">
+                                    {/* Plan name */}
+                                    <p
+                                        className="text-xs tracking-[0.3em] uppercase mb-3"
+                                        style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)" }}
+                                    >
+                                        {plan.name}
+                                    </p>
+                                    <p className="text-sm mb-6" style={{ color: "#a89880" }}>{plan.description}</p>
+
+                                    {/* Price */}
+                                    <div className="flex items-baseline gap-1 mb-8">
+                                        <span
+                                            className="text-5xl"
+                                            style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600, color: "#f5f0e8" }}
+                                        >
+                                            {plan.price}
+                                        </span>
+                                        {plan.period && (
+                                            <span className="text-sm" style={{ color: "#6b5f50" }}>{plan.period}</span>
+                                        )}
                                     </div>
-                                </div>
 
-                                <Link
-                                    href="/contact"
-                                    className={`w-full py-4 rounded-xl font-bold text-center transition-all mb-8 flex items-center justify-center gap-2 ${
-                                        plan.highlighted
-                                            ? "bg-emerald-500 text-white hover:bg-emerald-600 shadow-lg shadow-emerald-500/20"
-                                            : "bg-slate-800 text-white hover:bg-slate-700 border border-white/5"
-                                    }`}
-                                >
-                                    Get Started
-                                    <ArrowRight size={18} />
-                                </Link>
+                                    {/* CTA Button */}
+                                    <Link
+                                        href="/contact"
+                                        className="w-full py-4 flex items-center justify-center gap-2 text-xs tracking-widest uppercase font-bold mb-8 transition-all duration-300 hover:-translate-y-0.5"
+                                        style={
+                                            plan.highlighted
+                                                ? {
+                                                    background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
+                                                    color: "#080f09",
+                                                    fontFamily: "var(--font-cinzel)",
+                                                }
+                                                : {
+                                                    border: "1px solid rgba(201,168,76,0.3)",
+                                                    color: "#c9a84c",
+                                                    fontFamily: "var(--font-cinzel)",
+                                                }
+                                        }
+                                    >
+                                        Get Started
+                                        <ArrowRight size={14} />
+                                    </Link>
 
-                                <div className="space-y-4 mb-8 flex-grow">
-                                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Included Features</p>
-                                    {plan.features.map((feature, j) => (
-                                        <div key={j} className="flex items-start gap-3">
-                                            <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${plan.highlighted ? "bg-emerald-500 text-white" : "bg-emerald-500/10 text-emerald-400"}`}>
-                                                <Check size={12} strokeWidth={3} />
-                                            </div>
-                                            <span className="text-sm text-slate-300 leading-tight">{feature}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {plan.notIncluded.length > 0 && (
-                                    <div className="space-y-4 pt-6 border-t border-white/5">
-                                         <p className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Not Included</p>
-                                        {plan.notIncluded.map((feature, j) => (
-                                            <div key={j} className="flex items-start gap-3 opacity-60">
-                                                <X className="w-5 h-5 text-slate-500 flex-shrink-0" />
-                                                <span className="text-sm text-slate-500 leading-tight">{feature}</span>
+                                    {/* Features */}
+                                    <div className="space-y-3 flex-grow">
+                                        <p
+                                            className="text-xs tracking-widest uppercase mb-3"
+                                            style={{ color: "#6b5f50", fontFamily: "var(--font-cinzel)" }}
+                                        >
+                                            Included Features
+                                        </p>
+                                        {plan.features.map((feature, j) => (
+                                            <div key={j} className="flex items-start gap-3">
+                                                <div
+                                                    className="mt-0.5 w-4 h-4 flex items-center justify-center flex-shrink-0"
+                                                    style={{
+                                                        backgroundColor: plan.highlighted ? "rgba(201,168,76,0.2)" : "rgba(201,168,76,0.08)",
+                                                        border: "1px solid rgba(201,168,76,0.35)",
+                                                    }}
+                                                >
+                                                    <Check size={9} style={{ color: "#c9a84c" }} strokeWidth={3} />
+                                                </div>
+                                                <span className="text-sm leading-tight" style={{ color: "#a89880" }}>{feature}</span>
                                             </div>
                                         ))}
                                     </div>
-                                )}
+
+                                    {/* Not Included */}
+                                    {plan.notIncluded.length > 0 && (
+                                        <div
+                                            className="space-y-3 mt-6 pt-6"
+                                            style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}
+                                        >
+                                            <p
+                                                className="text-xs tracking-widest uppercase mb-3"
+                                                style={{ color: "#4a3f30", fontFamily: "var(--font-cinzel)" }}
+                                            >
+                                                Not Included
+                                            </p>
+                                            {plan.notIncluded.map((feature, j) => (
+                                                <div key={j} className="flex items-start gap-3 opacity-50">
+                                                    <X size={14} className="flex-shrink-0 mt-0.5" style={{ color: "#6b5f50" }} />
+                                                    <span className="text-sm leading-tight" style={{ color: "#6b5f50" }}>{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>
 
-                    {/* FAQ SECTION (Clean Accordion) */}
-                    <div className="max-w-4xl mx-auto mb-32">
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-16 text-center">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
+                    {/* Ornamental divider */}
+                    <div className="flex items-center gap-4 mb-24">
+                        <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.3))" }} />
+                        <span style={{ color: "rgba(201,168,76,0.6)", fontSize: "0.5rem" }}>✦</span>
+                        <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.3), transparent)" }} />
+                    </div>
+
+                    {/* FAQ Section */}
+                    <div className="max-w-3xl mx-auto">
+                        <div className="text-center mb-16">
+                            <p
+                                className="text-xs tracking-[0.35em] uppercase mb-4"
+                                style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)" }}
+                            >
+                                ✦ Common Questions ✦
+                            </p>
+                            <h2
+                                className="text-4xl md:text-5xl"
+                                style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, color: "#f5f0e8" }}
+                            >
+                                Frequently Asked <em style={{ color: "#c9a84c" }}>Questions</em>
+                            </h2>
+                        </div>
+
+                        <div className="space-y-3">
                             {FAQS.map((faq, i) => (
-                                <div key={i} className={`border rounded-2xl overflow-hidden transition-all duration-300 ${expandedFAQ === i ? "bg-slate-900/60 border-emerald-500/30" : "bg-slate-900/40 border-white/5"}`}>
+                                <div
+                                    key={i}
+                                    className="overflow-hidden transition-all duration-300"
+                                    style={{
+                                        border: expandedFAQ === i
+                                            ? "1px solid rgba(201,168,76,0.4)"
+                                            : "1px solid rgba(201,168,76,0.12)",
+                                        backgroundColor: expandedFAQ === i ? "#0f2218" : "rgba(15,34,24,0.4)",
+                                    }}
+                                >
                                     <button
                                         onClick={() => setExpandedFAQ(expandedFAQ === i ? null : i)}
                                         className="w-full flex items-center justify-between p-6 text-left"
                                     >
-                                        <span className={`font-bold text-lg ${expandedFAQ === i ? "text-emerald-400" : "text-white"}`}>{faq.question}</span>
-                                        <ChevronDown size={20} className={`transition-transform duration-300 ${expandedFAQ === i ? "rotate-180 text-emerald-400" : "text-slate-500"}`} />
+                                        <span
+                                            className="font-medium text-base"
+                                            style={{
+                                                color: expandedFAQ === i ? "#e8c97a" : "#f5f0e8",
+                                                fontFamily: "var(--font-cormorant)",
+                                                fontSize: "1.15rem",
+                                            }}
+                                        >
+                                            {faq.question}
+                                        </span>
+                                        <ChevronDown
+                                            size={18}
+                                            className="flex-shrink-0 ml-4 transition-transform duration-300"
+                                            style={{
+                                                color: expandedFAQ === i ? "#c9a84c" : "#6b5f50",
+                                                transform: expandedFAQ === i ? "rotate(180deg)" : "rotate(0deg)",
+                                            }}
+                                        />
                                     </button>
                                     {expandedFAQ === i && (
-                                        <div className="p-6 pt-0 text-slate-400 leading-relaxed border-t border-white/5 animate-fade-in">
+                                        <div
+                                            className="px-6 pb-6 text-sm leading-relaxed"
+                                            style={{
+                                                color: "#a89880",
+                                                borderTop: "1px solid rgba(201,168,76,0.1)",
+                                                paddingTop: "1rem",
+                                            }}
+                                        >
                                             {faq.answer}
                                         </div>
                                     )}
@@ -429,7 +290,6 @@ export default function PricingPage() {
 
                 </div>
             </main>
-            {/* <CTASection title={""} description={""} /> */}
             <Footer />
         </div>
     );

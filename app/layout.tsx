@@ -1,51 +1,6 @@
-// import React from "react"
-// import type { Metadata } from 'next'
-// import { Geist, Geist_Mono } from 'next/font/google'
-// import { Analytics } from '@vercel/analytics/next'
-// import './globals.css'
-
-// const _geist = Geist({ subsets: ["latin"] });
-// const _geistMono = Geist_Mono({ subsets: ["latin"] });
-
-// export const metadata: Metadata = {
-//   title: 'Marketly - Premium Digital Marketing Agency',
-//   description: 'Transform your brand with premium digital marketing solutions. 500+ projects completed, 120+ happy clients, 10+ years of expertise.',
-//   icons: {
-//     icon: [
-//       {
-//         url: '/icon-light-32x32.png',
-//         media: '(prefers-color-scheme: light)',
-//       },
-//       {
-//         url: '/icon-dark-32x32.png',
-//         media: '(prefers-color-scheme: dark)',
-//       },
-//       {
-//         url: '/icon.svg',
-//         type: 'image/svg+xml',
-//       },
-//     ],
-//     apple: '/apple-icon.png',
-//   },
-// }
-
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode
-// }>) {
-//   return (
-//     <html lang="en">
-//       <body className={`font-sans antialiased`}>
-//         {children}
-//         <Analytics />
-//       </body>
-//     </html>
-//   )
-// }
 import React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono, Cormorant_Garamond, Cinzel } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
@@ -59,8 +14,21 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 })
 
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+})
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+  weight: ["400", "500", "600", "700", "800", "900"],
+})
+
 export const metadata: Metadata = {
-  title: "Marketly - Premium Digital Marketing Agency",
+  title: "Marketly — Premium Digital Marketing Agency",
   description:
     "Transform your brand with premium digital marketing solutions. 500+ projects completed, 120+ happy clients, 10+ years of expertise.",
 
@@ -79,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geist.variable} ${geistMono.variable} font-sans antialiased`}
+        className={`${geist.variable} ${geistMono.variable} ${cormorant.variable} ${cinzel.variable} font-sans antialiased`}
       >
         {children}
         <Analytics />
