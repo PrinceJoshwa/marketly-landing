@@ -18,15 +18,15 @@ export default function CTASection({
         <section
             className="py-28 relative overflow-hidden"
             style={{
-                backgroundColor: "#060d07",
-                borderTop: "1px solid rgba(201,168,76,0.15)",
+                backgroundColor: "#0a1409",
+                borderTop: "1px solid rgba(217,146,1,0.15)",
             }}
         >
             {/* Atmospheric gold glow */}
             <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] pointer-events-none"
                 style={{
-                    background: "radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%)",
+                    background: "radial-gradient(ellipse, rgba(217,146,1,0.15) 0%, transparent 70%)",
                     filter: "blur(40px)",
                 }}
             />
@@ -36,8 +36,8 @@ export default function CTASection({
                 className="absolute inset-0 opacity-[0.025] pointer-events-none"
                 style={{
                     backgroundImage: `
-                        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.5) 60px, rgba(201,168,76,0.5) 61px),
-                        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.5) 60px, rgba(201,168,76,0.5) 61px)
+                        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(217,146,1,0.5) 60px, rgba(217,146,1,0.5) 61px),
+                        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(217,146,1,0.5) 60px, rgba(217,146,1,0.5) 61px)
                     `,
                 }}
             />
@@ -46,9 +46,9 @@ export default function CTASection({
                 <div className="max-w-4xl mx-auto text-center space-y-8 animate-reveal">
                     {/* Ornamental top */}
                     <div className="flex items-center justify-center gap-4">
-                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, transparent, #c9a84c)" }} />
-                        <span style={{ color: "#c9a84c", fontSize: "0.6rem" }}>✦ ✦ ✦</span>
-                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, #c9a84c, transparent)" }} />
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, transparent, #D99201)" }} />
+                        <span style={{ color: "#D99201", fontSize: "0.6rem" }}>✦ ✦ ✦</span>
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, #D99201, transparent)" }} />
                     </div>
 
                     <span
@@ -60,7 +60,7 @@ export default function CTASection({
 
                     <h2
                         className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight"
-                        style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
+                        style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}
                     >
                         {title}
                     </h2>
@@ -87,9 +87,9 @@ export default function CTASection({
 
                     {/* Ornamental bottom */}
                     <div className="flex items-center justify-center gap-4 pt-4">
-                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.4))" }} />
-                        <span style={{ color: "rgba(201,168,76,0.4)", fontSize: "0.5rem" }}>✦</span>
-                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.4), transparent)" }} />
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, transparent, rgba(217,146,1,0.4))" }} />
+                        <span style={{ color: "rgba(217,146,1,0.4)", fontSize: "0.5rem" }}>✦</span>
+                        <div className="h-px w-24" style={{ background: "linear-gradient(90deg, rgba(217,146,1,0.4), transparent)" }} />
                     </div>
                 </div>
             </div>

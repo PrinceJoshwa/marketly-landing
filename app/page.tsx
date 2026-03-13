@@ -1,190 +1,279 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, TrendingUp, Users, Award, Zap } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, ChevronUp, Search, TrendingUp, Shield, Zap } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CTASection from "@/components/CTASection";
+import { useState } from "react";
 
-const CLIENT_LOGOS = ["Brand A", "Brand B", "Brand C", "Brand D", "Brand E"];
-
-const STATS = [
-  { icon: TrendingUp, value: "500+", label: "Projects Completed" },
-  { icon: Users, value: "120+", label: "Happy Clients" },
-  { icon: Award, value: "10+", label: "Years Experience" },
-  { icon: Zap, value: "95%", label: "Satisfaction Rate" },
+// ── Client Logos (real brands from Figma) ───────────────────────────────────
+const CLIENT_LOGOS = [
+  "Wipro", "SHARP", "TVS", "Emeritus", "Brigade", "Wonderla",
+  "Dr. Health", "Fortis", "Mercury", "Altius", "Hosting Raja",
+  "Zamindar", "Eurokids", "MOS", "Wipro", "SHARP", "TVS", "Emeritus",
+  "Brigade", "Wonderla", "Dr. Health", "Fortis", "Mercury", "Altius",
+  "Hosting Raja", "Zamindar", "Eurokids", "MOS",
 ];
 
-const FEATURES = [
-  { icon: "✦", title: "Strategic Planning", description: "Data-driven strategies meticulously tailored to your business goals and market position." },
-  { icon: "✦", title: "Performance Analytics", description: "Real-time insights and comprehensive reporting that illuminate every facet of your growth." },
-  { icon: "✦", title: "Rapid Execution", description: "Swift, precise implementation without ever compromising on quality or craftsmanship." },
-  { icon: "✦", title: "Creative Innovation", description: "Distinctive ideas that elevate your brand above the noise and into lasting memory." },
-  { icon: "✦", title: "Dedicated Support", description: "An expert team wholly committed to your success, available at every milestone." },
-  { icon: "✦", title: "Continuous Optimisation", description: "Relentless refinement of every campaign for maximum return on your investment." },
+// ── Services Data ───────────────────────────────────────────────────────────
+const DIGITAL_MARKETING = [
+  "SEO", "Social Media", "PPC", "Digital Transformations",
+  "Performance Marketing", "Demand Generation",
+  "AI Marketing", "B2B & SaaS Marketing",
 ];
 
-const SERVICES = [
+const PAID_ADVERTISING = [
+  "Google Ads", "Amazon Ads", "Shopping Ads", "Facebook Ads",
+  "Instagram Ads", "YouTube Ads", "LinkedIn Ads", "OTT Advertising",
+];
+
+// ── Our Approach Steps ─────────────────────────────────────────────────────
+const APPROACH_STEPS = [
   {
-    title: "Digital Marketing",
-    description: "Commanding online presence through precisely crafted, data-driven campaigns.",
-    features: ["Social Media Strategy", "Content Marketing", "Paid Advertising"],
-    icon: "◈",
+    icon: TrendingUp,
+    step: "01",
+    title: "Strategic Planning\n& Goal Setting",
+    description: "We start by deeply understanding your business goals, audience, and competitive landscape to craft winning strategies.",
   },
   {
-    title: "SEO & Analytics",
-    description: "Elevate your rankings and illuminate performance with deep analytical insight.",
-    features: ["On-Page SEO", "Technical SEO", "Analytics & Reporting"],
-    icon: "◈",
+    icon: Zap,
+    step: "02",
+    title: "Tailored Campaign\nExecution",
+    description: "Every campaign is meticulously built and launched with precision, creativity, and measurable KPIs at its core.",
   },
   {
-    title: "Brand & Creative",
-    description: "Build a memorable, enduring brand identity that resonates across generations.",
-    features: ["Brand Strategy", "Visual Identity", "Content Creation"],
-    icon: "◈",
+    icon: Search,
+    step: "03",
+    title: "Constant Monitoring\n& Optimization",
+    description: "We track, analyse, and refine continuously — ensuring your campaigns deliver maximum ROI at all times.",
   },
 ];
 
+// ── FAQ Data ───────────────────────────────────────────────────────────────
+const FAQS = [
+  {
+    q: "What digital marketing services does Marketly offer?",
+    a: "We offer a comprehensive suite including SEO, Social Media Marketing, PPC, Performance Marketing, Demand Generation, AI Marketing, B2B & SaaS Marketing, and a full range of Paid Advertising (Google, Meta, Amazon, YouTube, LinkedIn, OTT).",
+  },
+  {
+    q: "How long does it take to see results from SEO?",
+    a: "SEO is a long-term strategy. You can typically start seeing measurable improvements in rankings and organic traffic within 3–6 months. However, significant results compound over 6–12 months of consistent optimisation.",
+  },
+  {
+    q: "Do you work with small businesses and startups?",
+    a: "Absolutely. We have worked with over 5000 brands ranging from startups and entrepreneurs to large enterprises since 2012. Our strategies are tailored to your budget and growth stage.",
+  },
+  {
+    q: "Is my business data safe with Marketly?",
+    a: "Yes — your data is 100% confidential and secure. We are a Google Partner and Meta Business Partner, adhering to the highest data protection and advertising standards.",
+  },
+  {
+    q: "How do I get started with Marketly?",
+    a: "Simple — click 'Let's Talk' in the navigation, fill in a short form, and our team will schedule a free strategy consultation within 24 hours.",
+  },
+  {
+    q: "What makes Marketly different from other agencies?",
+    a: "We combine over a decade of hands-on experience, certified partnerships (Google & Meta), and AI-powered marketing tools to deliver results that generic agencies simply cannot match. Every strategy is bespoke, data-driven, and built for long-term growth.",
+  },
+];
+
+// ── FAQ Item Component ─────────────────────────────────────────────────────
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      className="faq-item cursor-pointer"
+      onClick={() => setOpen(!open)}
+    >
+      <div className="flex items-center justify-between py-5 px-2 gap-4">
+        <h3
+          className="text-base font-semibold leading-snug"
+          style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}
+        >
+          {q}
+        </h3>
+        <div className="flex-shrink-0" style={{ color: "#D99201" }}>
+          {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </div>
+      </div>
+      {open && (
+        <p
+          className="px-2 pb-5 text-sm leading-relaxed"
+          style={{ color: "#a89880" }}
+        >
+          {a}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ── Score Gauge Component ──────────────────────────────────────────────────
+function ScoreGauge({ score }: { score: number }) {
+  const radius = 70;
+  const circumference = Math.PI * radius; // half circle
+  const offset = circumference - (score / 100) * circumference;
+  return (
+    <div className="flex flex-col items-center">
+      <svg width="180" height="100" viewBox="0 0 180 100">
+        {/* Background arc */}
+        <path
+          d="M 10 90 A 80 80 0 0 1 170 90"
+          fill="none"
+          stroke="rgba(217,146,1,0.15)"
+          strokeWidth="14"
+          strokeLinecap="round"
+        />
+        {/* Score arc */}
+        <path
+          d="M 10 90 A 80 80 0 0 1 170 90"
+          fill="none"
+          stroke="url(#goldGradGauge)"
+          strokeWidth="14"
+          strokeLinecap="round"
+          strokeDasharray={`${(score / 100) * 251} 251`}
+        />
+        <defs>
+          <linearGradient id="goldGradGauge" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#D99201" />
+            <stop offset="100%" stopColor="#EDB36A" />
+          </linearGradient>
+        </defs>
+        <text x="90" y="82" textAnchor="middle" fill="#E6E2DA" fontSize="28" fontWeight="bold">
+          {score}
+        </text>
+        <text x="90" y="96" textAnchor="middle" fill="#a89880" fontSize="9">
+          /100
+        </text>
+      </svg>
+      <div
+        className="mt-1 text-xs tracking-widest uppercase font-semibold"
+        style={{ color: "#D99201", fontFamily: "var(--font-cinzel)" }}
+      >
+        Good Visibility
+      </div>
+    </div>
+  );
+}
+
+// ── Main Page ──────────────────────────────────────────────────────────────
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#080f09", color: "#f5f0e8" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "#111f14", color: "#E6E2DA" }}>
       <Header />
 
-      {/* ── Hero Section ── */}
-      <section className="relative min-h-screen pt-24 flex items-center overflow-hidden">
-        {/* Atmospheric Background */}
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO SECTION
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative min-h-screen pt-36 flex items-center overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, #0d1a0f 0%, #1A3F22 55%, #142d1a 100%)",
+        }}
+      >
+        {/* Atmospheric glows */}
         <div className="absolute inset-0 pointer-events-none">
           <div
-            className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full opacity-10"
-            style={{
-              background: "radial-gradient(circle, #c9a84c 0%, transparent 70%)",
-              filter: "blur(80px)",
-            }}
+            className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full opacity-20"
+            style={{ background: "radial-gradient(circle, #D99201 0%, transparent 70%)", filter: "blur(90px)" }}
           />
           <div
-            className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full opacity-8"
-            style={{
-              background: "radial-gradient(circle, #1e3d26 0%, transparent 70%)",
-              filter: "blur(80px)",
-            }}
+            className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full opacity-10"
+            style={{ background: "radial-gradient(circle, #EDB36A 0%, transparent 70%)", filter: "blur(80px)" }}
           />
-          {/* Subtle texture overlay */}
+          {/* Grid texture */}
           <div
-            className="absolute inset-0 opacity-[0.03]"
+            className="absolute inset-0 opacity-[0.04]"
             style={{
-              backgroundImage: `repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 80px,
-                rgba(201,168,76,0.3) 80px,
-                rgba(201,168,76,0.3) 81px
-              ), repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 80px,
-                rgba(201,168,76,0.3) 80px,
-                rgba(201,168,76,0.3) 81px
-              )`,
+              backgroundImage: `repeating-linear-gradient(0deg, rgba(217,146,1,0.4) 0px, transparent 1px, transparent 80px), repeating-linear-gradient(90deg, rgba(217,146,1,0.4) 0px, transparent 1px, transparent 80px)`,
             }}
           />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 py-16">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
+
             {/* Left Content */}
             <div className="space-y-8 animate-reveal">
               {/* Badge */}
               <div
-                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs tracking-widest uppercase"
                 style={{
-                  border: "1px solid rgba(201,168,76,0.35)",
-                  backgroundColor: "rgba(201,168,76,0.06)",
+                  border: "1px solid rgba(217,146,1,0.4)",
+                  backgroundColor: "rgba(217,146,1,0.08)",
+                  color: "#EDB36A",
+                  fontFamily: "var(--font-cinzel)",
                 }}
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-glow-pulse"
-                  style={{ backgroundColor: "#c9a84c" }}
-                />
-                <span
-                  className="text-xs tracking-[0.2em] uppercase"
-                  style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)" }}
-                >
-                  Trusted by 120+ Brands Worldwide
-                </span>
+                <span className="w-1.5 h-1.5 rounded-full animate-glow-pulse" style={{ backgroundColor: "#EDB36A" }} />
+                Bangalore&apos;s Premier Digital Agency
               </div>
 
-              {/* Main Heading */}
-              <div className="space-y-2">
+              {/* Headline */}
+              <div className="space-y-3">
                 <h1
-                  className="text-5xl md:text-6xl lg:text-7xl font-light leading-[1.1]"
-                  style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
+                  className="text-5xl md:text-6xl lg:text-[68px] font-light leading-[1.1]"
+                  style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}
                 >
-                  Elevate Your Brand
+                  Confused about
                 </h1>
                 <h1
-                  className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] italic gold-text"
-                  style={{ fontFamily: "var(--font-serif)" }}
+                  className="text-5xl md:text-6xl lg:text-[68px] font-semibold leading-[1.1]"
+                  style={{ fontFamily: "var(--font-serif)", color: "#EDB36A" }}
                 >
-                  In The Digital Age
+                  marketing?
+                </h1>
+                <h1
+                  className="text-5xl md:text-6xl lg:text-[68px] font-light leading-[1.1]"
+                  style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}
+                >
+                  We&apos;ve got you covered!
                 </h1>
               </div>
 
               {/* Ornamental divider */}
               <div className="flex items-center gap-4">
-                <div className="h-px flex-1" style={{ background: "linear-gradient(90deg, #c9a84c, transparent)" }} />
-                <span style={{ color: "#c9a84c", fontSize: "0.6rem" }}>✦</span>
+                <div className="h-px flex-1" style={{ background: "linear-gradient(90deg, #D99201, transparent)" }} />
+                <span style={{ color: "#D99201", fontSize: "0.6rem" }}>✦</span>
               </div>
 
               {/* Description */}
-              <p
-                className="text-lg leading-relaxed max-w-xl"
-                style={{ color: "#a89880", fontFamily: "var(--font-sans)" }}
-              >
-                Premium digital marketing solutions that drive growth, engagement, and measurable results. We transform ambitious brands into enduring market leaders.
+              <p className="text-lg leading-relaxed max-w-xl" style={{ color: "#a89880" }}>
+                From SEO to Paid Ads, Social Media to AI Marketing — Marketly is your all-in-one growth partner trusted by 5000+ brands, businesses, and entrepreneurs since 2012.
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <Link
                   href="/contact"
-                  className="btn-gold group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-sm font-bold tracking-widest uppercase text-sm"
+                  className="btn-orange group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-sm font-bold tracking-widest uppercase text-sm"
                   style={{ fontFamily: "var(--font-cinzel)" }}
                 >
-                  Begin Your Journey
+                  Get Started Free
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
                 <Link
                   href="#services"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-medium tracking-widest uppercase text-sm transition-all duration-300 hover:bg-[rgba(201,168,76,0.08)]"
-                  style={{
-                    border: "1px solid rgba(201,168,76,0.3)",
-                    color: "#c9a84c",
-                    fontFamily: "var(--font-cinzel)",
-                  }}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-medium tracking-widest uppercase text-sm transition-all duration-300 hover:bg-[rgba(217,146,1,0.08)]"
+                  style={{ border: "1px solid rgba(217,146,1,0.35)", color: "#D99201", fontFamily: "var(--font-cinzel)" }}
                 >
-                  Explore Services
+                  Our Services
                 </Link>
               </div>
 
               {/* Quick Stats */}
               <div className="grid grid-cols-3 gap-6 pt-6">
                 {[
-                  { value: "500+", label: "Projects" },
-                  { value: "120+", label: "Clients" },
-                  { value: "10+", label: "Years" },
+                  { value: "5000+", label: "Brands Served" },
+                  { value: "12+", label: "Years Active" },
+                  { value: "95%", label: "Satisfaction" },
                 ].map((s, i) => (
                   <div key={i} className="space-y-1">
-                    <div
-                      className="text-3xl font-semibold gold-text"
-                      style={{ fontFamily: "var(--font-serif)" }}
-                    >
+                    <div className="text-3xl font-semibold gold-text" style={{ fontFamily: "var(--font-serif)" }}>
                       {s.value}
                     </div>
-                    <div
-                      className="text-xs tracking-widest uppercase"
-                      style={{ color: "#a89880", fontFamily: "var(--font-cinzel)" }}
-                    >
+                    <div className="text-xs tracking-widest uppercase" style={{ color: "#a89880", fontFamily: "var(--font-cinzel)" }}>
                       {s.label}
                     </div>
                   </div>
@@ -192,326 +281,117 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Content - Image */}
-            <div className="relative animate-reveal-right" style={{ animationDelay: "0.2s" }}>
+            {/* Right — Decorative Card */}
+            <div className="relative animate-reveal-right hidden lg:block" style={{ animationDelay: "0.2s" }}>
               <div
-                className="relative rounded-sm overflow-hidden shadow-2xl"
-                style={{ border: "1px solid rgba(201,168,76,0.25)" }}
-              >
-                <Image
-                  src="/hero-premium.jpg"
-                  alt="Premium Digital Marketing"
-                  width={600}
-                  height={500}
-                  className="w-full h-auto object-cover hover:scale-[1.03] transition-transform duration-700"
-                  priority
-                />
-                {/* Overlay */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(8,15,9,0.35) 0%, transparent 60%)",
-                  }}
-                />
-              </div>
-
-              {/* Floating Achievement Card */}
-              <div
-                className="absolute -bottom-6 -left-6 p-5 rounded-sm shadow-2xl animate-float"
+                className="rounded-2xl p-8 space-y-6 shadow-2xl"
                 style={{
-                  backgroundColor: "#0f2218",
-                  border: "1px solid rgba(201,168,76,0.3)",
+                  background: "linear-gradient(135deg, rgba(26,63,34,0.95) 0%, rgba(17,31,20,0.95) 100%)",
+                  border: "1px solid rgba(217,146,1,0.3)",
+                  backdropFilter: "blur(20px)",
                 }}
               >
-                <div className="flex items-center gap-4">
+                {/* Floating achievement badges */}
+                {[
+                  { label: "Google Partner", sub: "Certified Agency" },
+                  { label: "Meta Business Partner", sub: "Official Badged" },
+                  { label: "AI-Powered Marketing", sub: "Next-Gen Strategy" },
+                ].map((badge, i) => (
                   <div
-                    className="w-12 h-12 rounded-sm flex items-center justify-center text-sm font-bold"
+                    key={i}
+                    className="flex items-center gap-4 p-4 rounded-lg animate-float"
                     style={{
-                      background: "linear-gradient(135deg, #c9a84c, #e8c97a)",
-                      color: "#080f09",
-                      fontFamily: "var(--font-cinzel)",
+                      animationDelay: `${i * 1.2}s`,
+                      animationDuration: `${4 + i * 0.5}s`,
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(217,146,1,0.2)",
                     }}
                   >
-                    3×
-                  </div>
-                  <div>
-                    <div className="text-xs tracking-widest uppercase" style={{ color: "#a89880", fontFamily: "var(--font-cinzel)" }}>
-                      Average Growth
-                    </div>
-                    <div className="text-base font-semibold" style={{ color: "#f5f0e8", fontFamily: "var(--font-serif)" }}>
-                      3× in 120 Days
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative corner ornament */}
-              <div
-                className="absolute -top-3 -right-3 w-12 h-12"
-                style={{
-                  borderTop: "2px solid #c9a84c",
-                  borderRight: "2px solid #c9a84c",
-                }}
-              />
-              <div
-                className="absolute -bottom-3 -left-3 w-12 h-12"
-                style={{
-                  borderBottom: "2px solid #c9a84c",
-                  borderLeft: "2px solid #c9a84c",
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Stats Section ── */}
-      <section className="py-20 relative overflow-hidden" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid md:grid-cols-4 gap-6">
-            {STATS.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <div
-                  key={index}
-                  className="card-luxury p-8 rounded-sm text-center group animate-reveal"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div
-                    className="w-12 h-12 mx-auto mb-4 rounded-sm flex items-center justify-center"
-                    style={{
-                      border: "1px solid rgba(201,168,76,0.3)",
-                      backgroundColor: "rgba(201,168,76,0.08)",
-                    }}
-                  >
-                    <Icon
-                      className="w-6 h-6 group-hover:scale-110 transition-transform duration-300"
-                      style={{ color: "#c9a84c" }}
-                    />
-                  </div>
-                  <div
-                    className="text-4xl font-semibold mb-2 gold-text"
-                    style={{ fontFamily: "var(--font-serif)" }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div
-                    className="text-xs tracking-widest uppercase"
-                    style={{ color: "#a89880", fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Features / Why Choose Section ── */}
-      <section className="py-28 relative overflow-hidden" id="services">
-        {/* Subtle background glow */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] opacity-5 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse, #c9a84c 0%, transparent 70%)",
-            filter: "blur(60px)",
-          }}
-        />
-
-        <div className="container mx-auto px-6 relative z-10">
-          {/* Section Header */}
-          <div className="max-w-2xl mx-auto text-center mb-20 space-y-6 animate-reveal">
-            <span
-              className="section-label"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Our Distinction
-            </span>
-            <h2
-              className="text-4xl md:text-5xl font-light leading-tight"
-              style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
-            >
-              Why Choose{" "}
-              <span className="italic gold-text">Marketly</span>
-            </h2>
-            <div className="ornament-divider mx-auto max-w-xs">
-              <span className="text-xs" style={{ color: "#c9a84c" }}>✦</span>
-            </div>
-            <p className="text-base leading-relaxed" style={{ color: "#a89880" }}>
-              Premium solutions crafted for brands that demand nothing less than excellence
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURES.map((feature, index) => (
-              <div
-                key={index}
-                className="card-luxury p-8 rounded-sm group animate-reveal"
-                style={{ animationDelay: `${index * 0.08}s` }}
-              >
-                <div
-                  className="text-lg mb-5 font-bold"
-                  style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)" }}
-                >
-                  {feature.icon}
-                </div>
-                <h3
-                  className="text-xl font-semibold mb-3 group-hover:text-[#e8c97a] transition-colors duration-300"
-                  style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
-                >
-                  {feature.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#a89880" }}>
-                  {feature.description}
-                </p>
-                {/* Bottom gold accent */}
-                <div
-                  className="mt-6 h-px w-0 group-hover:w-full transition-all duration-500"
-                  style={{ background: "linear-gradient(90deg, #c9a84c, transparent)" }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Services Section ── */}
-      <section
-        className="py-28 relative overflow-hidden"
-        style={{ borderTop: "1px solid rgba(201,168,76,0.1)", backgroundColor: "#060d07" }}
-      >
-        <div className="container mx-auto px-6 relative z-10">
-          {/* Section Header */}
-          <div className="max-w-2xl mx-auto text-center mb-20 space-y-6 animate-reveal">
-            <span className="section-label" style={{ fontFamily: "var(--font-cinzel)" }}>
-              Our Expertise
-            </span>
-            <h2
-              className="text-4xl md:text-5xl font-light leading-tight"
-              style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
-            >
-              Premium{" "}
-              <span className="italic gold-text">Services</span>
-            </h2>
-            <div className="ornament-divider mx-auto max-w-xs">
-              <span className="text-xs" style={{ color: "#c9a84c" }}>✦</span>
-            </div>
-            <p className="text-base leading-relaxed" style={{ color: "#a89880" }}>
-              Comprehensive, bespoke solutions tailored to your unique business ambitions
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {SERVICES.map((service, index) => (
-              <div
-                key={index}
-                className="card-luxury rounded-sm overflow-hidden group animate-reveal"
-                style={{ animationDelay: `${index * 0.12}s` }}
-              >
-                {/* Card Header */}
-                <div
-                  className="h-44 flex items-center justify-center relative overflow-hidden"
-                  style={{
-                    background: "linear-gradient(135deg, #0f2218 0%, #132b1a 100%)",
-                    borderBottom: "1px solid rgba(201,168,76,0.15)",
-                  }}
-                >
-                  <span
-                    className="text-5xl font-bold group-hover:scale-110 transition-transform duration-500"
-                    style={{ color: "rgba(201,168,76,0.6)", fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {service.icon}
-                  </span>
-                  {/* Corner ornament */}
-                  <div
-                    className="absolute top-3 right-3 w-8 h-8"
-                    style={{
-                      borderTop: "1px solid rgba(201,168,76,0.4)",
-                      borderRight: "1px solid rgba(201,168,76,0.4)",
-                    }}
-                  />
-                  <div
-                    className="absolute bottom-3 left-3 w-8 h-8"
-                    style={{
-                      borderBottom: "1px solid rgba(201,168,76,0.4)",
-                      borderLeft: "1px solid rgba(201,168,76,0.4)",
-                    }}
-                  />
-                </div>
-
-                {/* Card Content */}
-                <div className="p-8 space-y-5">
-                  <div>
-                    <h3
-                      className="text-2xl font-semibold mb-2 group-hover:text-[#e8c97a] transition-colors duration-300"
-                      style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center text-base font-bold flex-shrink-0"
+                      style={{ background: "linear-gradient(135deg, #D99201, #EDB36A)", color: "#111f14" }}
                     >
-                      {service.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: "#a89880" }}>
-                      {service.description}
-                    </p>
+                      ✦
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold" style={{ color: "#E6E2DA" }}>{badge.label}</div>
+                      <div className="text-xs" style={{ color: "#a89880" }}>{badge.sub}</div>
+                    </div>
                   </div>
+                ))}
 
-                  <ul className="space-y-3">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-3 text-sm" style={{ color: "#c8bfb0" }}>
-                        <Check size={14} style={{ color: "#c9a84c", flexShrink: 0 }} />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300 group/link"
-                    style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)", letterSpacing: "0.1em" }}
-                  >
-                    <span className="group-hover/link:text-[#e8c97a] transition-colors">Learn More</span>
-                    <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform duration-300" />
-                  </Link>
+                {/* Score preview */}
+                <div className="flex items-center gap-4 pt-2" style={{ borderTop: "1px solid rgba(217,146,1,0.15)" }}>
+                  <div>
+                    <div className="text-xs uppercase tracking-widest" style={{ color: "#a89880", fontFamily: "var(--font-cinzel)" }}>
+                      Avg. Client ROI
+                    </div>
+                    <div className="text-4xl font-bold gold-text" style={{ fontFamily: "var(--font-serif)" }}>3×</div>
+                    <div className="text-xs" style={{ color: "#a89880" }}>in just 120 days</div>
+                  </div>
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, rgba(217,146,1,0.3), transparent)" }} />
+                  <div className="text-right">
+                    <div className="text-xs uppercase tracking-widest" style={{ color: "#a89880", fontFamily: "var(--font-cinzel)" }}>Year Est.</div>
+                    <div className="text-4xl font-bold gold-text" style={{ fontFamily: "var(--font-serif)" }}>2012</div>
+                  </div>
                 </div>
               </div>
-            ))}
+
+              {/* Corner ornaments */}
+              <div className="absolute -top-3 -right-3 w-10 h-10" style={{ borderTop: "2px solid #D99201", borderRight: "2px solid #D99201" }} />
+              <div className="absolute -bottom-3 -left-3 w-10 h-10" style={{ borderBottom: "2px solid #D99201", borderLeft: "2px solid #D99201" }} />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Client Logos Section ── */}
-      <section
-        className="py-24 relative overflow-hidden"
-        style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}
+      {/* ══════════════════════════════════════════════════════════════════
+          TRUST BAR
+      ══════════════════════════════════════════════════════════════════ */}
+      <div
+        className="py-4 text-center"
+        style={{ backgroundColor: "#D99201" }}
       >
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16 space-y-4 animate-reveal">
-            <span className="section-label" style={{ fontFamily: "var(--font-cinzel)" }}>
-              Our Clientele
-            </span>
-            <h2
-              className="text-3xl md:text-4xl font-light"
-              style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
-            >
-              Trusted by{" "}
-              <span className="italic gold-text">Leading Brands</span>
-            </h2>
-            <p className="text-sm" style={{ color: "#a89880" }}>
-              Join 120+ distinguished companies that transformed their digital presence
-            </p>
-          </div>
+        <p
+          className="text-sm font-bold tracking-widest uppercase"
+          style={{ color: "#111f14", fontFamily: "var(--font-cinzel)" }}
+        >
+          ✦ Trusted by 5000+ Happy Brands, Businesses, and Entrepreneurs Since 2012 ✦
+        </p>
+      </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {CLIENT_LOGOS.map((client, index) => (
+      {/* ══════════════════════════════════════════════════════════════════
+          CLIENT LOGOS MARQUEE
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="py-16 relative overflow-hidden"
+        style={{ backgroundColor: "#0d1a0f", borderTop: "1px solid rgba(217,146,1,0.1)", borderBottom: "1px solid rgba(217,146,1,0.1)" }}
+      >
+        <div className="container mx-auto px-6 mb-10 text-center animate-reveal">
+          <span className="section-label">Our Portfolio</span>
+          <h2 className="text-3xl md:text-4xl font-light mt-3" style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}>
+            Brands That <span className="italic gold-text">Trust Us</span>
+          </h2>
+        </div>
+
+        {/* Marquee ticker */}
+        <div className="marquee-container py-4">
+          <div className="animate-marquee flex gap-6 whitespace-nowrap">
+            {CLIENT_LOGOS.map((name, i) => (
               <div
-                key={index}
-                className="card-luxury rounded-sm flex items-center justify-center h-20 group animate-reveal"
-                style={{ animationDelay: `${index * 0.08}s` }}
+                key={i}
+                className="inline-flex items-center justify-center px-6 py-3 rounded-sm flex-shrink-0"
+                style={{
+                  background: "linear-gradient(135deg, #1A3F22, #1e4a28)",
+                  border: "1px solid rgba(217,146,1,0.2)",
+                  minWidth: "140px",
+                }}
               >
                 <span
-                  className="text-sm font-medium tracking-widest uppercase group-hover:text-[#c9a84c] transition-colors duration-300"
-                  style={{ color: "#a89880", fontFamily: "var(--font-cinzel)" }}
+                  className="text-sm font-semibold tracking-widest uppercase"
+                  style={{ color: "#E6E2DA", fontFamily: "var(--font-cinzel)", fontSize: "0.7rem" }}
                 >
-                  {client}
+                  {name}
                 </span>
               </div>
             ))}
@@ -519,178 +399,420 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Strategy Visual Section ── */}
+      {/* ══════════════════════════════════════════════════════════════════
+          OUR APPROACH
+      ══════════════════════════════════════════════════════════════════ */}
       <section
         className="py-28 relative overflow-hidden"
-        style={{ borderTop: "1px solid rgba(201,168,76,0.1)", backgroundColor: "#060d07" }}
+        style={{ backgroundColor: "#111f14" }}
       >
         <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-16 space-y-4 animate-reveal">
-            <span className="section-label" style={{ fontFamily: "var(--font-cinzel)" }}>
-              Our Approach
-            </span>
-            <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-light"
-              style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
-            >
-              Digital Marketing{" "}
-              <span className="italic gold-text">Strategy</span>
+          <div className="max-w-2xl mx-auto text-center mb-20 space-y-5 animate-reveal">
+            <span className="section-label">How We Work</span>
+            <h2 className="text-4xl md:text-5xl font-light leading-tight" style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}>
+              Our <span className="italic gold-text">Approach</span>
             </h2>
             <div className="ornament-divider mx-auto max-w-xs">
-              <span className="text-xs" style={{ color: "#c9a84c" }}>✦</span>
+              <span className="text-xs" style={{ color: "#D99201" }}>✦</span>
             </div>
-            <p
-              className="text-base max-w-2xl mx-auto leading-relaxed"
-              style={{ color: "#a89880" }}
-            >
-              A comprehensive, refined approach to grow your brand with data-driven insights and creative excellence
+            <p className="text-base leading-relaxed" style={{ color: "#a89880" }}>
+              A proven three-stage framework that transforms marketing investment into compounding growth
             </p>
           </div>
 
-          <div
-            className="relative max-w-5xl mx-auto rounded-sm overflow-hidden shadow-2xl group animate-scale-in"
-            style={{ border: "1px solid rgba(201,168,76,0.25)" }}
-          >
-            <Image
-              src="/strategy-planning.jpg"
-              alt="Digital Marketing Strategy"
-              width={1200}
-              height={700}
-              className="w-full h-auto object-cover group-hover:scale-[1.03] transition-transform duration-700"
-            />
-            {/* Overlay */}
+          <div className="grid md:grid-cols-3 gap-8 relative">
+            {/* Connecting line (desktop) */}
             <div
-              className="absolute inset-0"
-              style={{
-                background: "linear-gradient(to top, rgba(8,15,9,0.85) 0%, rgba(8,15,9,0.2) 60%, transparent 100%)",
-              }}
+              className="hidden md:block absolute top-12 left-[16.66%] right-[16.66%] h-px"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(217,146,1,0.3), rgba(217,146,1,0.3), transparent)" }}
             />
 
-            {/* CTA Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-10 text-center">
-              <Link
-                href="/features"
-                className="btn-gold inline-flex items-center gap-3 px-8 py-4 rounded-sm font-bold tracking-widest uppercase text-sm"
-                style={{ fontFamily: "var(--font-cinzel)" }}
-              >
-                View Our Strategy
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-
-            {/* Corner ornaments */}
-            <div className="absolute top-4 left-4 w-10 h-10" style={{ borderTop: "1px solid rgba(201,168,76,0.5)", borderLeft: "1px solid rgba(201,168,76,0.5)" }} />
-            <div className="absolute top-4 right-4 w-10 h-10" style={{ borderTop: "1px solid rgba(201,168,76,0.5)", borderRight: "1px solid rgba(201,168,76,0.5)" }} />
+            {APPROACH_STEPS.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <div
+                  key={i}
+                  className="card-luxury rounded-lg p-8 text-center group animate-reveal relative"
+                  style={{ animationDelay: `${i * 0.12}s` }}
+                >
+                  <div
+                    className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center relative z-10"
+                    style={{
+                      background: "linear-gradient(135deg, #D99201, #EDB36A)",
+                      boxShadow: "0 0 30px rgba(217,146,1,0.25)",
+                    }}
+                  >
+                    <Icon size={24} style={{ color: "#111f14" }} />
+                  </div>
+                  <div
+                    className="text-xs font-bold tracking-[0.3em] uppercase mb-3"
+                    style={{ color: "rgba(217,146,1,0.6)", fontFamily: "var(--font-cinzel)" }}
+                  >
+                    Step {step.step}
+                  </div>
+                  <h3
+                    className="text-xl font-semibold mb-4 whitespace-pre-line group-hover:text-[#EDB36A] transition-colors duration-300"
+                    style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "#a89880" }}>
+                    {step.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── Process Section ── */}
+      {/* ══════════════════════════════════════════════════════════════════
+          SERVICES SECTION
+      ══════════════════════════════════════════════════════════════════ */}
       <section
+        id="services"
         className="py-28 relative overflow-hidden"
-        style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}
+        style={{ backgroundColor: "#0d1a0f", borderTop: "1px solid rgba(217,146,1,0.1)" }}
       >
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center mb-20 space-y-6 animate-reveal">
-            <span className="section-label" style={{ fontFamily: "var(--font-cinzel)" }}>
-              The Process
-            </span>
-            <h2
-              className="text-4xl md:text-5xl font-light"
-              style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
-            >
-              Our{" "}
-              <span className="italic gold-text">Proven Process</span>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-2xl mx-auto text-center mb-20 space-y-5 animate-reveal">
+            <span className="section-label">What We Do</span>
+            <h2 className="text-4xl md:text-5xl font-light leading-tight" style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}>
+              Our <span className="italic gold-text">Services</span>
             </h2>
             <div className="ornament-divider mx-auto max-w-xs">
-              <span className="text-xs" style={{ color: "#c9a84c" }}>✦</span>
+              <span className="text-xs" style={{ color: "#D99201" }}>✦</span>
             </div>
-            <p className="text-base" style={{ color: "#a89880" }}>
-              From strategy to sustained success — six deliberate steps
+            <p className="text-base leading-relaxed" style={{ color: "#a89880" }}>
+              End-to-end digital marketing solutions engineered for measurable growth
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { step: "I", title: "Strategy", description: "Define goals and establish your competitive positioning with precision." },
-              { step: "II", title: "Planning", description: "Craft a detailed, actionable implementation roadmap aligned to your vision." },
-              { step: "III", title: "Execution", description: "Launch campaigns with surgical precision and creative excellence." },
-              { step: "IV", title: "Optimisation", description: "Continuously test, refine, and elevate performance metrics." },
-              { step: "V", title: "Scaling", description: "Expand successful initiatives to amplify your market presence." },
-              { step: "VI", title: "Growth", description: "Achieve sustained, compounding business growth and brand authority." },
-            ].map((item, index) => (
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Digital Marketing Card */}
+            <div className="card-luxury rounded-lg overflow-hidden animate-reveal group" style={{ animationDelay: "0.08s" }}>
               <div
-                key={index}
-                className="card-luxury rounded-sm p-8 group animate-reveal relative overflow-hidden"
-                style={{ animationDelay: `${index * 0.08}s` }}
+                className="px-8 py-5 flex items-center gap-3"
+                style={{
+                  background: "linear-gradient(90deg, rgba(217,146,1,0.15), transparent)",
+                  borderBottom: "1px solid rgba(217,146,1,0.2)",
+                }}
               >
-                {/* Gold left border accent */}
                 <div
-                  className="absolute left-0 top-0 bottom-0 w-0.5 group-hover:opacity-100 opacity-40 transition-opacity duration-300"
-                  style={{ background: "linear-gradient(to bottom, transparent, #c9a84c, transparent)" }}
-                />
-                <div
-                  className="text-4xl font-light mb-4 group-hover:opacity-100 opacity-30 transition-opacity duration-300"
-                  style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)" }}
+                  className="w-8 h-8 rounded-sm flex items-center justify-center text-sm font-bold"
+                  style={{ background: "linear-gradient(135deg,#D99201,#EDB36A)", color: "#111f14" }}
                 >
-                  {item.step}
+                  ◈
                 </div>
                 <h3
-                  className="text-xl font-semibold mb-3 group-hover:text-[#e8c97a] transition-colors duration-300"
-                  style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
+                  className="text-lg font-bold tracking-wider uppercase"
+                  style={{ fontFamily: "var(--font-cinzel)", color: "#E6E2DA" }}
                 >
-                  {item.title}
+                  Digital Marketing
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#a89880" }}>
-                  {item.description}
-                </p>
               </div>
-            ))}
+              <div className="p-8">
+                <ul className="space-y-3">
+                  {DIGITAL_MARKETING.map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-sm" style={{ color: "#c8bfb0" }}>
+                      <Check size={14} style={{ color: "#D99201", flexShrink: 0 }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/features"
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-medium group/link"
+                  style={{ color: "#D99201", fontFamily: "var(--font-cinzel)", letterSpacing: "0.1em" }}
+                >
+                  <span className="group-hover/link:text-[#EDB36A] transition-colors">Explore All</span>
+                  <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform duration-300" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Paid Advertising Card */}
+            <div className="card-luxury rounded-lg overflow-hidden animate-reveal group" style={{ animationDelay: "0.16s" }}>
+              <div
+                className="px-8 py-5 flex items-center gap-3"
+                style={{
+                  background: "linear-gradient(90deg, rgba(217,146,1,0.15), transparent)",
+                  borderBottom: "1px solid rgba(217,146,1,0.2)",
+                }}
+              >
+                <div
+                  className="w-8 h-8 rounded-sm flex items-center justify-center text-sm font-bold"
+                  style={{ background: "linear-gradient(135deg,#D99201,#EDB36A)", color: "#111f14" }}
+                >
+                  ◈
+                </div>
+                <h3
+                  className="text-lg font-bold tracking-wider uppercase"
+                  style={{ fontFamily: "var(--font-cinzel)", color: "#E6E2DA" }}
+                >
+                  Paid Advertising
+                </h3>
+              </div>
+              <div className="p-8">
+                <ul className="space-y-3">
+                  {PAID_ADVERTISING.map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-sm" style={{ color: "#c8bfb0" }}>
+                      <Check size={14} style={{ color: "#D99201", flexShrink: 0 }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/features"
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-medium group/link"
+                  style={{ color: "#D99201", fontFamily: "var(--font-cinzel)", letterSpacing: "0.1em" }}
+                >
+                  <span className="group-hover/link:text-[#EDB36A] transition-colors">Explore All</span>
+                  <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform duration-300" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Testimonial / Trust Section ── */}
+      {/* ══════════════════════════════════════════════════════════════════
+          TRUST BADGES — Google Partner + Meta Business Partner
+      ══════════════════════════════════════════════════════════════════ */}
       <section
         className="py-24 relative overflow-hidden"
-        style={{ borderTop: "1px solid rgba(201,168,76,0.1)", backgroundColor: "#060d07" }}
+        style={{ backgroundColor: "#111f14", borderTop: "1px solid rgba(217,146,1,0.1)" }}
       >
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center space-y-8 animate-reveal">
-            <span className="section-label" style={{ fontFamily: "var(--font-cinzel)" }}>
-              Client Voices
-            </span>
+          <div className="max-w-2xl mx-auto text-center mb-14 space-y-4 animate-reveal">
+            <Shield size={32} className="mx-auto" style={{ color: "#D99201" }} />
+            <h2 className="text-3xl md:text-4xl font-light" style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}>
+              Your data is protected,{" "}
+              <span className="italic gold-text">100% confidential and secure</span>
+            </h2>
+            <p className="text-sm" style={{ color: "#a89880" }}>
+              We are officially badged by Google and Meta — the world&apos;s most trusted advertising platforms.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 max-w-2xl mx-auto">
+            {/* Google Partner */}
             <div
-              className="text-5xl font-light italic leading-relaxed"
-              style={{ fontFamily: "var(--font-serif)", color: "#f5f0e8" }}
+              className="flex-1 w-full max-w-xs p-8 rounded-lg flex flex-col items-center gap-4 animate-reveal"
+              style={{
+                background: "#ffffff",
+                border: "1px solid rgba(217,146,1,0.2)",
+                boxShadow: "0 4px 30px rgba(0,0,0,0.3)",
+              }}
             >
-              <span className="gold-text text-7xl leading-none">"</span>
-              <br />
-              Marketly transformed our digital presence beyond recognition. The results were not just measurable — they were remarkable.
-            </div>
-            <div className="ornament-divider mx-auto max-w-xs">
-              <span className="text-xs" style={{ color: "#c9a84c" }}>✦</span>
-            </div>
-            <div>
-              <div
-                className="text-base font-semibold tracking-widest uppercase"
-                style={{ color: "#c9a84c", fontFamily: "var(--font-cinzel)" }}
-              >
-                Alexandra Whitmore
+              <div className="flex items-center gap-3">
+                <div className="flex gap-0.5">
+                  {["#4285F4", "#EA4335", "#FBBC05", "#34A853"].map((c, i) => (
+                    <div key={i} className="w-4 h-4 rounded-full" style={{ backgroundColor: c }} />
+                  ))}
+                </div>
+                <span className="text-2xl font-bold" style={{ color: "#1a1a1a" }}>Google</span>
               </div>
-              <div className="text-sm mt-1" style={{ color: "#a89880" }}>
-                Chief Executive Officer, Whitmore Group
+              <div className="text-center">
+                <div className="text-3xl font-bold" style={{ color: "#1a1a1a", fontFamily: "var(--font-serif)" }}>Partner</div>
+                <div className="text-xs mt-1 tracking-widest uppercase" style={{ color: "#555" }}>Certified Agency</div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden sm:flex flex-col items-center gap-2">
+              <div className="w-px h-16" style={{ background: "linear-gradient(to bottom, transparent, rgba(217,146,1,0.4), transparent)" }} />
+              <span style={{ color: "rgba(217,146,1,0.5)", fontSize: "0.6rem" }}>✦</span>
+              <div className="w-px h-16" style={{ background: "linear-gradient(to bottom, rgba(217,146,1,0.4), transparent)" }} />
+            </div>
+
+            {/* Meta Business Partner */}
+            <div
+              className="flex-1 w-full max-w-xs p-8 rounded-lg flex flex-col items-center gap-4 animate-reveal"
+              style={{
+                background: "#ffffff",
+                border: "1px solid rgba(217,146,1,0.2)",
+                boxShadow: "0 4px 30px rgba(0,0,0,0.3)",
+                animationDelay: "0.1s",
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-sm"
+                  style={{ background: "linear-gradient(135deg, #0082fb, #0096ff)" }}
+                >
+                  ∞
+                </div>
+                <span className="text-2xl font-bold" style={{ color: "#0082fb" }}>Meta</span>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold" style={{ color: "#1a1a1a", fontFamily: "var(--font-serif)" }}>Business</div>
+                <div className="text-2xl font-bold" style={{ color: "#1a1a1a", fontFamily: "var(--font-serif)" }}>Partners</div>
+                <div className="text-xs mt-1 tracking-widest uppercase" style={{ color: "#555" }}>Official Badge</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ══════════════════════════════════════════════════════════════════
+          AI SEARCH VISIBILITY
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="py-24 relative overflow-hidden"
+        style={{ backgroundColor: "#0d1a0f", borderTop: "1px solid rgba(217,146,1,0.1)" }}
+      >
+        {/* Background glow */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] opacity-10 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse, #D99201 0%, transparent 70%)", filter: "blur(80px)" }}
+        />
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              {/* Left text */}
+              <div className="space-y-6 animate-reveal">
+                <span className="section-label">AI Search Era</span>
+                <h2 className="text-4xl md:text-5xl font-light leading-tight" style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}>
+                  How Visible Is Your Brand{" "}
+                  <span className="italic gold-text">In AI Search?</span>
+                </h2>
+                <div className="ornament-divider max-w-xs">
+                  <span className="text-xs" style={{ color: "#D99201" }}>✦</span>
+                </div>
+                <p className="text-base leading-relaxed" style={{ color: "#a89880" }}>
+                  AI search engines like Gemini, Perplexity, Claude, and Bing Copilot are now answering your customers' questions — without ever clicking your website. Is your brand showing up?
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: "#a89880" }}>
+                  Marketly&apos;s AI Visibility Audit analyses your brand&apos;s presence across all major AI engines and builds a strategy to make you the go-to answer.
+                </p>
+                <div className="flex flex-wrap gap-3 pt-2">
+                  {["Perplexity", "Gemini", "Bing Copilot", "Claude"].map((engine, i) => (
+                    <span
+                      key={i}
+                      className="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider"
+                      style={{
+                        border: "1px solid rgba(217,146,1,0.35)",
+                        color: "#EDB36A",
+                        fontFamily: "var(--font-cinzel)",
+                        backgroundColor: "rgba(217,146,1,0.06)",
+                      }}
+                    >
+                      {engine}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  href="/contact"
+                  className="btn-gold inline-flex items-center gap-3 px-7 py-3.5 rounded-sm font-bold tracking-widest uppercase text-sm"
+                  style={{ fontFamily: "var(--font-cinzel)" }}
+                >
+                  Get Your AI Score
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+
+              {/* Right — Score gauge card */}
+              <div
+                className="card-luxury rounded-xl p-8 text-center animate-reveal space-y-6"
+                style={{ animationDelay: "0.15s" }}
+              >
+                <div
+                  className="text-sm font-bold tracking-widest uppercase"
+                  style={{ color: "#D99201", fontFamily: "var(--font-cinzel)" }}
+                >
+                  Sample AI Visibility Score
+                </div>
+                <div className="flex justify-center">
+                  <div
+                    className="p-6 rounded-lg"
+                    style={{
+                      background: "rgba(0,0,0,0.3)",
+                      border: "1px solid rgba(217,146,1,0.2)",
+                    }}
+                  >
+                    <ScoreGauge score={73} />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-left">
+                  {[
+                    { label: "Perplexity", val: "68%", color: "#EDB36A" },
+                    { label: "Gemini", val: "75%", color: "#34A853" },
+                    { label: "Bing Copilot", val: "71%", color: "#0082fb" },
+                    { label: "Claude", val: "80%", color: "#c9a84c" },
+                  ].map((row, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: row.color }} />
+                      <span className="text-xs" style={{ color: "#a89880" }}>{row.label}</span>
+                      <span className="text-xs font-bold ml-auto" style={{ color: "#E6E2DA" }}>{row.val}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs" style={{ color: "#6b5f50" }}>
+                  *Sample data. Your score will vary. Book an audit to see your real numbers.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          FAQ SECTION
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="py-28 relative overflow-hidden"
+        style={{ backgroundColor: "#111f14", borderTop: "1px solid rgba(217,146,1,0.1)" }}
+      >
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-16 space-y-5 animate-reveal">
+              <span className="section-label">Got Questions?</span>
+              <h2 className="text-4xl md:text-5xl font-light" style={{ fontFamily: "var(--font-serif)", color: "#E6E2DA" }}>
+                Frequently Asked <span className="italic gold-text">Questions</span>
+              </h2>
+              <div className="ornament-divider mx-auto max-w-xs">
+                <span className="text-xs" style={{ color: "#D99201" }}>✦</span>
+              </div>
+            </div>
+
+            <div
+              className="rounded-lg overflow-hidden animate-reveal"
+              style={{
+                background: "linear-gradient(135deg, #1A3F22, #1e4a28)",
+                border: "1px solid rgba(217,146,1,0.2)",
+              }}
+            >
+              <div className="divide-y divide-[rgba(217,146,1,0.1)]">
+                {FAQS.map((faq, i) => (
+                  <div key={i} className="px-6">
+                    <FaqItem q={faq.q} a={faq.a} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p
+              className="text-center mt-10 text-sm"
+              style={{ color: "#a89880" }}
+            >
+              Still have questions?{" "}
+              <Link href="/contact" style={{ color: "#EDB36A" }} className="underline underline-offset-4 hover:text-[#D99201] transition-colors">
+                Talk to our team
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          CTA SECTION
+      ══════════════════════════════════════════════════════════════════ */}
       <CTASection
-        title="Ready to Transform Your Brand?"
-        description="Let us discuss how our premium services can drive your business growth and establish lasting market authority."
-        buttonText="Schedule a Consultation"
+        title="Ready to 3× Your Business Growth?"
+        description="Join 5000+ brands that transformed their digital presence with Marketly. Let's build your success story — starting today."
+        buttonText="Let's Talk Strategy"
         variant="green"
       />
 
